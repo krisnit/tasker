@@ -1,9 +1,12 @@
 import React from "react";
 import { FaPizzaSlice } from "react-icons/fa";
 import "./Headers.scss";
+import { auth } from "../../Firebase";
+import { withRouter } from "react-router-dom";
 
-export const Header = props => {
-  const { id, displayName, email } = props;
+const Header = props => {
+  console.log(props);
+  const { displayName } = props;
   console.log(displayName);
   return (
     <header className="header" data-testid="header">
@@ -18,7 +21,16 @@ export const Header = props => {
               <FaPizzaSlice />
             </li>
             <li>Welcome {displayName}</li>
-            {displayName ? <li>SignOut</li> : <li>SignIn</li>}
+            {displayName ? (
+              <li onClick={() => auth.signOut()}>SignOut</li>
+            ) : (
+              <li
+                onClick={() => {
+                  props.history.push("/signin");
+                }}>
+                SignIn
+              </li>
+            )}
             <li>Tasks</li>
           </ul>
         </div>
@@ -26,3 +38,5 @@ export const Header = props => {
     </header>
   );
 };
+
+export default withRouter(Header);

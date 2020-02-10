@@ -59,6 +59,5 @@ export const getAllTasks = async user => {
   const tasks = listItems.docs.map(doc => {
     return { id: doc.id, ...doc.data() };
   });
-  console.log(tasksRef, listItems, tasks, user);
   return tasks;
 };

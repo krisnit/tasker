@@ -1,5 +1,5 @@
 import React from "react";
-import { Header } from "./components/Layout/Header";
+import Header from "./components/Layout/Header";
 import Routing from "./components/Routing/Routing";
 import { BrowserRouter as Router } from "react-router-dom";
 import { auth, createProfileDocument } from "./Firebase";
@@ -14,6 +14,8 @@ export const App = () => {
         userRef.onSnapshot(snapshot => {
           setCurrentUser({ id: snapshot.id, ...snapshot.data() });
         });
+      } else {
+        setCurrentUser(null);
       }
     });
     return () => {

@@ -5,7 +5,6 @@ const SignIn = () => {
   return (
     <div>
       <button onClick={() => signInWithGoogle()}>SignIn With Google</button>
-      <button onClick={() => auth.signOut()}>SignOut</button>
     </div>
   );
 };
