@@ -52,3 +52,13 @@ export const createTask = async (user, data) => {
     console.log("error", err);
   }
 };
+
+export const getAllTasks = async user => {
+  const tasksRef = firestore.collection(`users/${user.id}/tasks`);
+  const listItems = await tasksRef.get();
+  const tasks = listItems.docs.map(doc => {
+    return { id: doc.id, ...doc.data() };
+  });
+  console.log(tasksRef, listItems, tasks, user);
+  return tasks;
+};

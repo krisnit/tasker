@@ -1,15 +1,21 @@
 import React from "react";
-import CreateTask from "./CreateTask";
+import { getAllTasks } from "../../Firebase";
+import { UserContext } from "../../App";
 
 const Tasks = () => {
+  const currentUser = React.useContext(UserContext);
+  console.log(currentUser);
   const [tasks, setTasks] = React.useState([]);
-  const handleTasks = task => {
-    setTasks(task);
-  };
+  React.useEffect(() => {
+    const getTasks = async () => {
+      const taskList = await getAllTasks(currentUser);
+      setTasks(taskList);
+    };
+    getTasks();
+  }, []);
   console.log(tasks);
   return (
     <div className="tasks">
-      <CreateTask handleTasks={handleTasks} />
       {tasks.map(({ id, taskName, createdAt }) => (
         <div key={id}>
           <div>{taskName}</div>
