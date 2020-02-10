@@ -1,0 +1,11 @@
+nav {
+  display: flex;
+  .settings {
+    display: flex;
+    margin-left:auto;
+    ul {
+      display: flex;
+      list-style: none;
+    }
+  }
+}

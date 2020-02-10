@@ -1,0 +1,14 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  ul {
+    display: flex;
+    flex-direction: column;
+    li {
+      list-style: none;
+      font-size: 1.5rem;
+      margin: 0.7rem 0;
+      color: red;
+    }
+  }
+}
