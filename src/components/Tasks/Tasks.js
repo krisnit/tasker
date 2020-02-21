@@ -3,6 +3,8 @@ import { getAllTasks } from "../../Firebase";
 import { UserContext } from "../../App";
 import CreateTask from "./CreateTask";
 import Task from "./Task";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import Loader from 'react-loader-spinner'
 
 const Tasks = () => {
   const currentUser = React.useContext(UserContext);
@@ -14,16 +16,18 @@ const Tasks = () => {
       const taskList = await getAllTasks(currentUser);
       setTasks(taskList);
     }
+    else{setTasks([])}
   };
   React.useEffect(() => {
     getTasks();
   }, [currentUser]);
-  console.log(tasks);
+
   return (
     <div className="tasks">
       <CreateTask getTasks={getTasks} />
       {tasks.length < 1 ? (
-        <div>Loading...</div>
+        <Loader type="Audio" margin={80} color="purple" height={80} width={80} />
+        // <div>Loading...</div>
       ) : (
         tasks.map(task => <Task key={task.id} {...task} />)
       )}

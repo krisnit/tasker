@@ -11,12 +11,12 @@ export const SideBar = () => {
   return (
     <div className="sidebar" data-testid="sidebar">
       <ul className="sidebar__generic">
-        <li>
+        {/* <li>
           <span>
             <FaInbox />
           </span>
           <span>InBox</span>
-        </li>
+        </li> */}
         <li>
           <span>
             <FaRegCalendar />

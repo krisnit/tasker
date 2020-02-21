@@ -3,6 +3,7 @@ import { createTask } from "../../Firebase";
 import { UserContext } from "../../App";
 import DateTimePicker from "react-datetime-picker";
 import { withRouter } from "react-router-dom";
+import './CreateTask.scss'
 
 let initialState = {
   createdAt: new Date(),
@@ -51,7 +52,7 @@ const CreateTask = props => {
           />
           <label forname="dueDate">Complete By</label>
           <DateTimePicker onChange={handleDateChange} value={task.date} />
-          <button>Submit</button>
+          <button className="submit">Submit</button>
         </form>
       </div>
     </>

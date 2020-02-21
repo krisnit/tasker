@@ -1,0 +1,47 @@
+.createtask{
+    margin:1rem;
+    font-size:1.2rem;
+   form{ display:flex;
+    flex-direction:column;
+    width:30rem;
+    input{
+        margin:.5rem 0;
+        border:none;
+        border-bottom:1px solid purple;
+        height:2rem;
+        &:focus{
+            border:none;
+        }
+    }
+    label{
+        padding:.25rem;
+    }
+    .react-datetime-picker__wrapper{
+        border:none;
+        border-bottom:1px solid purple;
+        height:2.5rem;
+        width:2rem;
+        
+        margin-top:.5rem;
+        display:flex;
+        align-items:center;
+        .react-datetime-picker__inputGroup{
+            
+            text-align:center;
+            input{border:none;}
+            .react-calendar{
+                .react-calendar__month-view__days{
+                    button{margin:0px;
+                    padding:0px}
+                }
+            }
+        }
+    }
+    .submit{
+        margin-top:1rem;
+        background:#00d1b2;
+    }
+}
+}
+
+

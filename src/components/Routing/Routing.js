@@ -7,8 +7,9 @@ import { UserContext } from "../../App";
 import { withRouter } from "react-router-dom";
 
 const Routing = props => {
-  console.log(props.history);
+  
   const currentUser = React.useContext(UserContext);
+  console.log(currentUser);
   return (
     <Switch>
       <Route
