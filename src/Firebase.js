@@ -46,8 +46,30 @@ export const createProfileDocument = async (user, data) => {
 export const createTask = async (user, data) => {
   const tasksRef = firestore.collection(`users/${user.id}/tasks`);
   try {
-    await tasksRef.add({ ...data });
-    return tasksRef;
+    let p = await tasksRef.add({ ...data });
+    console.log(p.id);
+    return [p.id, tasksRef];
+  } catch (err) {
+    console.log("error", err);
+  }
+};
+
+export const getTask = async (user, id) => {
+  const tasksRef = firestore.collection(`users/${user.id}/tasks`);
+  try {
+    let p = await tasksRef.doc(id).get();
+    return { id: p.id, ...p.data() };
+  } catch (err) {
+    console.log("error", err);
+  }
+};
+
+export const deleteTask = async (user, id) => {
+  const tasksRef = firestore.collection(`users/${user.id}/tasks`);
+  try {
+    let p = await tasksRef.doc(id).get();
+    await p.delete();
+    return;
   } catch (err) {
     console.log("error", err);
   }

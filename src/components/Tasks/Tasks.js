@@ -3,36 +3,44 @@ import { getAllTasks } from "../../Firebase";
 import { UserContext } from "../../App";
 import CreateTask from "./CreateTask";
 import Task from "./Task";
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
-import Loader from 'react-loader-spinner'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Loader from "react-loader-spinner";
+import { connect } from "react-redux";
+import { getTasks } from "../../store/todos/todosActions";
 
-const Tasks = () => {
-  const currentUser = React.useContext(UserContext);
-  console.log(currentUser);
-  const [tasks, setTasks] = React.useState([]);
+const Tasks = props => {
   const getTasks = async () => {
-    if (currentUser) {
-      console.log(currentUser);
-      const taskList = await getAllTasks(currentUser);
-      setTasks(taskList);
+    if (props.user) {
+      const taskList = await getAllTasks(props.user);
+      props.getTasks(taskList);
     }
-    else{setTasks([])}
   };
   React.useEffect(() => {
     getTasks();
-  }, [currentUser]);
+  }, [props.user]);
 
   return (
     <div className="tasks">
       <CreateTask getTasks={getTasks} />
-      {tasks.length < 1 ? (
-        <Loader type="Audio" margin={80} color="purple" height={80} width={80} />
-        // <div>Loading...</div>
+      {props.todos.length < 1 ? (
+        <Loader
+          type="Audio"
+          margin={80}
+          color="purple"
+          height={80}
+          width={80}
+        />
       ) : (
-        tasks.map(task => <Task key={task.id} {...task} />)
+        // <div>Loading...</div>
+        props.todos.map(todo => <Task key={todo.id} {...todo} user={props.user} />)
       )}
     </div>
   );
 };
 
-export default Tasks;
+const mapState = ({ todos, user }) => ({ todos, user });
+const mapDispatch = dispatch => ({
+  getTasks: data => dispatch(getTasks(data))
+});
+
+export default connect(mapState, mapDispatch)(Tasks);

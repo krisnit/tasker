@@ -1,10 +1,10 @@
 import React from "react";
-import { createTask } from "../../Firebase";
-import { UserContext } from "../../App";
+
 import DateTimePicker from "react-datetime-picker";
 import { withRouter } from "react-router-dom";
-import './CreateTask.scss'
-
+import "./CreateTask.scss";
+import { connect } from "react-redux";
+import { addTask } from "../../store/todos/todosActions";
 let initialState = {
   createdAt: new Date(),
   taskName: "",
@@ -14,7 +14,6 @@ let initialState = {
 };
 
 const CreateTask = props => {
-  const currentUser = React.useContext(UserContext);
   let [task, setTask] = React.useState(initialState);
   const handleChange = (e, date) => {
     setTask({ ...task, [e.target.name]: e.target.value });
@@ -22,11 +21,10 @@ const CreateTask = props => {
   const handleDateChange = date => {
     setTask({ ...task, date });
   };
-  const handleSubmit = async (e, value) => {
+  const handleSubmit = async (e, user) => {
     e.preventDefault();
-    if (currentUser) {
-      await createTask(value, task);
-      props.getTasks();
+    if (props.user) {
+      props.createTask(props.user, task);
       setTask(initialState);
     } else {
       props.history.push("/signin");
@@ -35,7 +33,7 @@ const CreateTask = props => {
   return (
     <>
       <div className="createtask">
-        <form onSubmit={event => handleSubmit(event, currentUser)}>
+        <form onSubmit={event => handleSubmit(event, props.user)}>
           <label forname="taskName">Task Name</label>
           <input
             name="taskName"
@@ -59,4 +57,9 @@ const CreateTask = props => {
   );
 };
 
-export default withRouter(CreateTask);
+const mapState = ({ todos, user }) => ({ todos, user });
+const mapDispatch = dispatch => ({
+  createTask: (user, task) => dispatch(addTask(user, task))
+});
+
+export default withRouter(connect(mapState, mapDispatch)(CreateTask));

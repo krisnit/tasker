@@ -5,18 +5,16 @@ import SignOut from "../Auth/SignOut";
 import { Home } from "../Layout/Home";
 import { UserContext } from "../../App";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
 const Routing = props => {
-  
-  const currentUser = React.useContext(UserContext);
-  console.log(currentUser);
   return (
     <Switch>
       <Route
         exact
         path="/signin"
         render={() => {
-          return currentUser ? props.history.push("/") : <SignIn />;
+          return props.user ? props.history.push("/") : <SignIn />;
         }}
       />
       <Route exact path="/SignOut" component={SignOut} />
@@ -25,4 +23,5 @@ const Routing = props => {
   );
 };
 
-export default withRouter(Routing);
+const mapState = ({ user }) => ({ user });
+export default withRouter(connect(mapState, null)(Routing));

@@ -10,18 +10,14 @@ import { connect } from "react-redux";
 export const UserContext = React.createContext(null);
 
 const App = props => {
-  console.log(props);
-  const [currentUser, setCurrentUser] = React.useState(null);
   React.useEffect(() => {
     const unSubscribeFromAuth = auth.onAuthStateChanged(async currentUser => {
       if (currentUser) {
         const userRef = await createProfileDocument(currentUser);
         userRef.onSnapshot(snapshot => {
-          setCurrentUser({ id: snapshot.id, ...snapshot.data() });
           props.setUser({ id: snapshot.id, ...snapshot.data() });
         });
       } else {
-        setCurrentUser(null);
         props.setUser(null);
       }
     });
@@ -30,14 +26,12 @@ const App = props => {
     };
   }, []);
   return (
-    <UserContext.Provider value={currentUser}>
-      <Router>
-        <div className="App">
-          <Header {...currentUser} />
-          <Routing />
-        </div>
-      </Router>
-    </UserContext.Provider>
+    <Router>
+      <div className="App">
+        <Header {...props.user} />
+        <Routing />
+      </div>
+    </Router>
   );
 };
 

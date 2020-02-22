@@ -1,7 +1,8 @@
 import React from "react";
 import "./Task.scss";
+import { deleteTask } from "../../Firebase";
 
-const Task = ({ id, taskName, project, createdAt, date }) => {
+const Task = ({ id, taskName, project, createdAt, date, user }) => {
   return (
     <div className="task" key={id}>
       <div className="task-item">
@@ -22,12 +23,16 @@ const Task = ({ id, taskName, project, createdAt, date }) => {
           Due Date : {date.toDate().toLocaleString()}
         </span>
         <button className="edit">Edit</button>
-        <button className="delete" onClick={() => console.log("delete")}>
+        <button className="delete" onClick={() => deleteTask(user, id)}>
           Delete
         </button>
       </div>
     </div>
   );
 };
+
+const getState =({user})=>({
+  user
+})
 
 export default Task;
