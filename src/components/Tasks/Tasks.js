@@ -1,6 +1,5 @@
 import React from "react";
 import { getAllTasks } from "../../Firebase";
-import { UserContext } from "../../App";
 import CreateTask from "./CreateTask";
 import Task from "./Task";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
@@ -32,7 +31,7 @@ const Tasks = props => {
         />
       ) : (
         // <div>Loading...</div>
-        props.todos.map(todo => <Task key={todo.id} {...todo} user={props.user} />)
+        props.todos.map(todo => <Task key={todo.id} {...todo} />)
       )}
     </div>
   );

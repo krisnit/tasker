@@ -1,17 +1,38 @@
 import React from "react";
 import "./Task.scss";
-import { deleteTask } from "../../Firebase";
+import { connect } from "react-redux";
+import { removeTask, toggleTodo } from "../../store/todos/todosActions";
 
-const Task = ({ id, taskName, project, createdAt, date, user }) => {
+const Task = ({
+  id,
+  taskName,
+  project,
+  createdAt,
+  date,
+  user,
+  removeTask,
+  completed,
+  toggleTodo
+}) => {
+  console.log(completed);
   return (
     <div className="task" key={id}>
       <div className="task-item">
-        <input
+        {/* <input
           className="checkbox"
           type="checkbox"
-          onChange={() => console.log("hi")}
-        />
-        <span className="name">{taskName}</span>
+          
+        /> */}
+        <span
+          onClick={() => toggleTodo(user, id, completed)}
+          className="name"
+          style={
+            completed
+              ? { textDecoration: "line-through" }
+              : { textDecoration: "none" }
+          }>
+          {taskName}
+        </span>
 
         <span className="project">{project}</span>
       </div>
@@ -23,7 +44,7 @@ const Task = ({ id, taskName, project, createdAt, date, user }) => {
           Due Date : {date.toDate().toLocaleString()}
         </span>
         <button className="edit">Edit</button>
-        <button className="delete" onClick={() => deleteTask(user, id)}>
+        <button className="delete" onClick={() => removeTask(user, id)}>
           Delete
         </button>
       </div>
@@ -31,8 +52,12 @@ const Task = ({ id, taskName, project, createdAt, date, user }) => {
   );
 };
 
-const getState =({user})=>({
+const mapState = ({ user }) => ({
   user
-})
+});
+const mapDispatch = dispatch => ({
+  removeTask: (user, id) => dispatch(removeTask(user, id)),
+  toggleTodo: (user, id, value) => dispatch(toggleTodo(user, id, value))
+});
 
-export default Task;
+export default connect(mapState, mapDispatch)(Task);

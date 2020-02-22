@@ -1,5 +1,6 @@
 import React from "react";
 import "./SideBar.scss";
+import Projects from "./Projects";
 import {
   FaChevronDown,
   FaInbox,
@@ -38,7 +39,9 @@ export const SideBar = () => {
         <h2>Projects</h2>
       </div>
 
-      <ul className="sidebar__projects">Projects will be here</ul>
+      <ul className="sidebar__projects">
+        <Projects />
+      </ul>
     </div>
   );
 };

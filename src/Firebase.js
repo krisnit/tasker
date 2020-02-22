@@ -67,8 +67,19 @@ export const getTask = async (user, id) => {
 export const deleteTask = async (user, id) => {
   const tasksRef = firestore.collection(`users/${user.id}/tasks`);
   try {
-    let p = await tasksRef.doc(id).get();
-    await p.delete();
+    let p = await tasksRef.doc(id).delete();
+    console.log(p);
+    return;
+  } catch (err) {
+    console.log("error", err);
+  }
+};
+
+export const toggleTask = async (user, id, value) => {
+  const tasksRef = firestore.collection(`users/${user.id}/tasks`);
+  try {
+    let p = await tasksRef.doc(id).update({ completed: !value });
+    console.log(p);
     return;
   } catch (err) {
     console.log("error", err);
